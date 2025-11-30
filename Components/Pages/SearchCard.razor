@@ -1,0 +1,42 @@
+﻿@page "/search"
+@using CA2_WebAppUsingAPIs.Services
+@using static CA2_WebAppUsingAPIs.Models.YgoCard
+@rendermode InteractiveServer
+@inject YgoApiService Api
+
+<h3>Search Yu-Gi-Oh! Card</h3>
+
+<input @bind="cardName" placeholder="Enter card name" />
+<button @onclick="Search">Search</button>
+
+@if (card != null)
+{
+    <div class="card">
+        <h4>@card.name</h4>
+        <p>@card.type</p>
+        <p>@card.desc</p>
+
+        @if (card.card_images?.Any() == true)
+        {
+            <img src="@card.card_images[0].image_url" style="width:200px" />
+        }
+    </div>
+}
+else if (searched)
+{
+    <p>No card found.</p>
+}
+
+@code {
+    private string cardName = "";
+    private CardInfo? card;
+    private bool searched = false;
+
+    private async Task Search()
+    {
+        searched = false;
+        card = await Api.SearchCardByNameAsync(cardName);
+        searched = true;
+    }
+}
+

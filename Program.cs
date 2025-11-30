@@ -1,4 +1,5 @@
 using CA2_WebAppUsingAPIs.Components;
+using CA2_WebAppUsingAPIs.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
