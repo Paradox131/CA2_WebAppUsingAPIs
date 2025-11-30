@@ -1,0 +1,30 @@
+﻿@page "/cards"
+@using CA2_WebAppUsingAPIs.Services
+@inject CardmarketService CardmarketService
+
+<h3>Search Yu-Gi-Oh Cards</h3>
+
+<input @bind="searchTerm" placeholder="Card name" />
+<button @onclick="SearchCards">Search</button>
+
+@if (cards != null)
+{
+    <ul>
+        @foreach (var card in cards)
+        {
+            <li>
+                <strong>@card.Name</strong> | Expansion: @card.Expansion | Rarity: @card.Rarity | Price: €@card.Price
+            </li>
+        }
+    </ul>
+}
+
+@code {
+    private string searchTerm;
+    private List<CardProduct> cards;
+
+    private async Task SearchCards()
+    {
+        cards = await CardmarketService.SearchYuGiOhCardsAsync(searchTerm);
+    }
+}
