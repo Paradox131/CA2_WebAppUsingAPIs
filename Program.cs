@@ -6,6 +6,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
+builder.Services.AddHttpClient<YgoApiService>(client =>
+{
+    client.BaseAddress = new Uri("https://db.ygoprodeck.com/");
+});
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
