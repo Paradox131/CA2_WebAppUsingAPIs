@@ -1,16 +1,24 @@
 using CA2_WebAppUsingAPIs.Components;
 using CA2_WebAppUsingAPIs.Services;
+using MudBlazor.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+builder.Services.AddMudServices();
 
 builder.Services.AddHttpClient<YgoApiService>(client =>
 {
     client.BaseAddress = new Uri("https://db.ygoprodeck.com/");
 });
+
+builder.Services.AddHttpClient("Cardmarket", client =>
+{
+    client.BaseAddress = new Uri("https://api.cardmarket.com/ws/v2.0/output.json/"); // Base URL for Cardmarket API v2
+});
+
 
 
 var app = builder.Build();
@@ -30,5 +38,6 @@ app.UseAntiforgery();
 
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
+
 
 app.Run();

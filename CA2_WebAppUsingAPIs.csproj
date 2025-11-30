@@ -6,4 +6,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="MudBlazor" Version="8.15.0" />
+    <PackageReference Include="RestSharp" Version="113.0.0" />
+  </ItemGroup>
+
 </Project>

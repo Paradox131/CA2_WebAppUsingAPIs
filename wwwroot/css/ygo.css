@@ -1,0 +1,7 @@
+﻿.ygo-card-frame {
+    border: 3px solid gold;
+    border-radius: 10px;
+    padding: 10px;
+    background: #1a1a1a;
+    box-shadow: 0px 0px 15px #000;
+}
