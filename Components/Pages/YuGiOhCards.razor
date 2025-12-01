@@ -1,30 +1,33 @@
-﻿@page "/cards"
+﻿@using CA2_WebAppUsingAPIs.Models
 @using CA2_WebAppUsingAPIs.Services
-@inject CardmarketService CardmarketService
+@inject JustTcgService JustTcg
 
-<h3>Search Yu-Gi-Oh Cards</h3>
-
-<input @bind="searchTerm" placeholder="Card name" />
-<button @onclick="SearchCards">Search</button>
+<input @bind="search" placeholder="Search card name" />
+<button @onclick="DoSearch">Search</button>
 
 @if (cards != null)
 {
     <ul>
-        @foreach (var card in cards)
+        @foreach (var c in cards)
         {
             <li>
-                <strong>@card.Name</strong> | Expansion: @card.Expansion | Rarity: @card.Rarity | Price: €@card.Price
+                @c.name — set: @c.set
+                <ul>
+                    @foreach (var v in c.variants)
+                    {
+                        <li>@v.printing / @v.condition — €@v.price</li>
+                    }
+                </ul>
             </li>
         }
     </ul>
 }
 
 @code {
-    private string searchTerm;
-    private List<CardProduct> cards;
-
-    private async Task SearchCards()
+    private string search;
+    private Card[] cards;
+    private async Task DoSearch()
     {
-        cards = await CardmarketService.SearchYuGiOhCardsAsync(searchTerm);
+        cards = await JustTcg.SearchCardsAsync(search);
     }
 }

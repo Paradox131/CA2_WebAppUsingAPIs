@@ -1,4 +1,5 @@
 using CA2_WebAppUsingAPIs.Components;
+using CA2_WebAppUsingAPIs.Models;
 using CA2_WebAppUsingAPIs.Services;
 using MudBlazor.Services;
 
@@ -8,13 +9,19 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 builder.Services.AddMudServices();
-builder.Services.AddScoped<CardmarketService>();
+//builder.Services.AddScoped<CardmarketService>();
+builder.Services.AddScoped<JustTcgService>();
+
+builder.Services.Configure<JustTcgSettings>(builder.Configuration.GetSection("JustTcg"));
 
 
 builder.Services.AddHttpClient<YgoApiService>(client =>
 {
     client.BaseAddress = new Uri("https://db.ygoprodeck.com/");
 });
+
+builder.Services.AddHttpClient("JustTCG", client =>
+  client.BaseAddress = new Uri("https://api.justtcg.com/v1/"));
 
 builder.Services.AddHttpClient("Cardmarket", client =>
 {
